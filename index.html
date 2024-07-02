@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Teclas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .key-input {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .key-input label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .key-input input {
+            padding: 5px;
+            font-size: 16px;
+            width: 200px;
+        }
+        .submit-btn {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .submit-btn button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .submit-btn button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Control de Teclas</h1>
+    <div class="key-input">
+		<h2 id="text-key"></h2>
+    </div>
+
+    <script>
+        document.addEventListener('keydown', function(event) {
+            // Verificar que el campo de entrada esté disponible
+			var log = document.getElementById('text-key')
+			var key = event.key
+			log.textContent = key
+			enviarTecla(key)
+        });
+
+        function enviarTecla(tecla) {
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ key: tecla })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Tecla enviada correctamente');
+                } else {
+                    console.error('Error al enviar tecla:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error('Error de red:', error);
+            });
+        }
+    </script>
+</body>
+</html>
